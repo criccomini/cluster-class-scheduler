@@ -36,8 +36,8 @@ function extendRecords(records) {
       // "5/3/2022 9:33:49"
       return this['Timestamp'];
     }
-    console.log(record.name() + " " + record.timestamp() + " " + record.grade() + " " + record.teacher());
   });
+  return records;
 }
 
 module.exports = {

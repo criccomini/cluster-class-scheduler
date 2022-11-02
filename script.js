@@ -7,5 +7,8 @@ document.querySelector('#open').addEventListener('click', function() {
 
 ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
   // Only support one file (no multi-select) right now
-  loadCsv(filePaths[0]);
+  loadCsv(filePaths[0])
+    .then(records => {
+      // TODO do something with the records
+    });
 });
