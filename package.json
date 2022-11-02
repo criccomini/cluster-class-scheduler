@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/criccomini/cluster-class-scheduler#readme",
   "devDependencies": {
+    "csv-parse": "^5.3.1",
     "electron": "^21.2.1"
   }
 }

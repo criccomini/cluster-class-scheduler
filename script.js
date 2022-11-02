@@ -1,3 +1,4 @@
+const parser = require('./parser.js');
 const { dialog, ipcRenderer } = require('electron');
 
 document.querySelector('#open').addEventListener('click', function() {
@@ -5,5 +6,6 @@ document.querySelector('#open').addEventListener('click', function() {
 });
 
 ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
-  alert('user selected: ' + filePaths);
+  // Only support one file (no multi-select) right now
+  parser.loadCsv(filePaths[0]);
 });
