@@ -36,9 +36,9 @@ ipcMain.on('show-open-dialog', (event, arg) => {
     ],
     properties: ['openFile']
   }).then(result => {
-    console.log(result.canceled);
-    console.log(result.filePaths);
-    event.sender.send('open-dialog-paths-selected', result.filePaths);
+    if (!result.canceled) {
+      event.sender.send('open-dialog-paths-selected', result.filePaths);
+    }
   }).catch(err => {
     console.log(err);
   });
