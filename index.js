@@ -6,11 +6,11 @@ const createWindow = () => {
     height: 600
   })
 
-  win.loadFile('src/index.html')
+  win.loadFile('index.html')
 }
 
-// https://www.electronjs.org/docs/latest/tutorial/quick-start#manage-your-windows-lifecycle
 app.on('window-all-closed', () => {
+  // https://www.electronjs.org/docs/latest/tutorial/quick-start#manage-your-windows-lifecycle
   if (process.platform !== 'darwin') app.quit()
 })
 
