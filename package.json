@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/criccomini/cluster-class-scheduler/issues"
   },
-  "homepage": "https://github.com/criccomini/cluster-class-scheduler#readme"
+  "homepage": "https://github.com/criccomini/cluster-class-scheduler#readme",
+  "devDependencies": {
+    "electron": "^21.2.1"
+  }
 }
