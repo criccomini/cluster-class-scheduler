@@ -11,7 +11,7 @@ async function loadCsv(csvFilePath) {
 }
 
 function extendRecords(records) {
-  records.forEach((record) => {
+  records.forEach(record => {
     record.choice = function(n) {
       // n = choice number
       // "Clay Owl"
