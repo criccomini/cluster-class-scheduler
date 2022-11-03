@@ -3,7 +3,7 @@ const { parse } = require('csv-parse/sync');
 
 class Preferences {
   constructor(records) {
-    this.records = records
+    this.records = records;
   }
 
   /**
