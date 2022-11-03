@@ -22,6 +22,7 @@ function extendRecords(records) {
       return this['Your First and Last Name'];
     };
     record.absent = function() {
+      // Friday, May 6, Friday, May 13
       return this['If you know you will be absent on a Cluster Class day, please select the day(s) you will be absent'];
     };
     record.grade = function() {
