@@ -43,3 +43,11 @@ ipcMain.on('show-open-dialog', (event, arg) => {
     console.log(err);
   });
 });
+
+ipcMain.on('show-save-dialog', (event, arg) => {
+  dialog.showSaveDialog({
+    filters: [
+      { name: 'csv', extensions: ['csv'] }
+    ]
+  });
+});

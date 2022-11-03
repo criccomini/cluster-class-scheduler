@@ -8,6 +8,10 @@ document.querySelector('#open').addEventListener('click', function() {
   ipcRenderer.send('show-open-dialog');
 });
 
+document.querySelector('#save').addEventListener('click', function() {
+  ipcRenderer.send('show-save-dialog');
+});
+
 ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
   // Only support one file (no multi-select) right now
   Preferences.loadFromCsv(filePaths[0])
