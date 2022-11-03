@@ -16,10 +16,9 @@ class Controller {
       .innerHTML += `
         <tr>
           <td>${c.name}</td>
-          <td><input type="text" name="" value="" /></td>
-          <td><input type="text" name="" value="" /></td>
-          <td><input type="text" name="" value="" /></td>
-          <td><input type="text" name="" value="" /></td>
+          <td><input type="checkbox" name="day_1" ${c.days.includes(1) ? 'checked' : ''} /></td>
+          <td><input type="checkbox" name="day_2" ${c.days.includes(2) ? 'checked' : ''} /></td>
+          <td><input type="checkbox" name="day_3" ${c.days.includes(3) ? 'checked' : ''} /></td>
           <td><input type="text" name="" value="${c.minStudents}" /></td>
           <td><input type="text" name="" value="${c.maxStudents}" /></td>
         </tr>
