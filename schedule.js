@@ -1,6 +1,5 @@
 class Schedule {
-  constructor(records) {
-    this.records = records;
+  constructor() {
   }
 
   /**
@@ -10,9 +9,9 @@ class Schedule {
    * 
    * @returns A set of unique class name strings
    */
-  classes() {
+  static classes(records) {
     // Put the choices into a set so we get unique class names.
-    return new Set(this.records.flatMap(record => {
+    return new Set(records.flatMap(record => {
       // Returns an array of choices for the record.
       // Array.from because keys() returns an iterator and map() doesn't work.
       return Array.from(Array(99).keys())

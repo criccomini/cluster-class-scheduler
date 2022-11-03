@@ -11,6 +11,6 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
   // Only support one file (no multi-select) right now
   loadCsv(filePaths[0])
     .then(records => {
-      console.log(new Schedule(records).classes());
+      console.log(Schedule.classes(records));
     });
 });
