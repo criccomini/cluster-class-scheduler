@@ -6,7 +6,37 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <input type="button" name="open" id="open" value="Open" />
+    <input type="button" name="open" id="open" value="Open Google Doc CSV file" />
+    <div>
+      <h2>Class Settings</h2>
+      <table style="width: 100%;">
+        <thead>
+          <td>Name</td>
+          <td>Day 1</td>
+          <td>Day 2</td>
+          <td>Day 3</td>
+          <td>Day 4</td>
+          <td>Minimum Students</td>
+          <td>Maximum Students</td>
+        </thead>
+        <tbody>
+          <!-- Dynamically loaded-->
+        </tbody>
+      </table>
+      <input type="button" name="save" id="save" value="Generate and Save Assigments" />
+    </div>
+
+    <template id="class_row">
+      <tr>
+        <td></td>
+        <td><input type="text" name="" value="" /></td>
+        <td><input type="text" name="" value="" /></td>
+        <td><input type="text" name="" value="" /></td>
+        <td><input type="text" name="" value="" /></td>
+        <td><input type="text" name="" value="" /></td>
+        <td><input type="text" name="" value="" /></td>
+      </tr>
+    </template>
     <script src="script.js"></script>
   </body>
 </html>
