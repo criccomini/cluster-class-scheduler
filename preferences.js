@@ -15,7 +15,7 @@ class Preferences {
    */
   classes() {
     // Put the choices into a set so we get unique class names.
-    return new Set(this.records.flatMap(record => {
+    return Array.from(new Set(this.records.flatMap(record => {
       // Returns an array of choices for the record.
       // Array.from because keys() returns an iterator and map() doesn't work.
       return Array.from(Array(99).keys())
@@ -24,7 +24,7 @@ class Preferences {
         // No one picks 99 choices, so we're going to have nulls for some
         // choices. Get rid of these nulls.
         .filter(c => !!c);
-    }));
+    })));
   }
 
   /**

@@ -1,5 +1,7 @@
+const { Preferences } = require("./preferences");
+
 class Class {
-  constructor(name, days, minStudents=6, maxStudents=30) {
+  constructor(name, days=[], minStudents=6, maxStudents=30) {
     this.name = name;
     this.days = days;
     this.minStudents = minStudents;
@@ -10,6 +12,14 @@ class Class {
 class Schedule {
   constructor(classes) {
     this.classes = classes;
+  }
+
+  static fromPreferences(preferences) {
+    const classes = preferences
+      .classes()
+      .map(c => new Class(c));
+
+    return new Schedule(classes);
   }
 }
 

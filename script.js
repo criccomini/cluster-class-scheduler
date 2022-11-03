@@ -11,6 +11,7 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
   // Only support one file (no multi-select) right now
   Preferences.loadFromCsv(filePaths[0])
     .then(preferences => {
-      console.log(preferences.classes());
+      const schedule = Schedule.fromPreferences(preferences);
+      console.log(schedule.classes);
     });
 });
