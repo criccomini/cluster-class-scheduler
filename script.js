@@ -26,11 +26,10 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
 ipcRenderer.on('save-dialog-path-selected', (event, filePath)=> {
   const schedule = Schedule.fromHtml('#classes-table-body');
   const assignments = assign(schedule);
-  console.log(assignments);
 
   writeFile(
     filePath,
-    stringify(assignments),
+    stringify(assignments, { header: true, quoted: true }),
     {
       encoding: "utf8"
     },
