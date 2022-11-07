@@ -20,3 +20,10 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
       Controller.addClasses(schedule.classes);
     });
 });
+
+ipcRenderer.on('save-dialog-path-selected', (event, filePath)=> {
+  const schedule = Schedule.fromHtml('#classes-table-body');
+  // TODO run assigner
+  // TODO save CSV
+  console.log(schedule)
+});

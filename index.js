@@ -49,5 +49,11 @@ ipcMain.on('show-save-dialog', (event, arg) => {
     filters: [
       { name: 'csv', extensions: ['csv'] }
     ]
+  }).then(result => {
+    if (!result.canceled) {
+      event.sender.send('save-dialog-path-selected', result.filePath);
+    }
+  }).catch(err => {
+    console.log(err);
   });
 });
