@@ -1,5 +1,7 @@
 const { dialog, ipcRenderer } = require('electron');
+const { writeFile } = require('fs');
 const { assign } = require('./assigner.js');
+const { stringify } = require('csv-stringify/sync');
 const { Schedule } = require('./schedule.js');
 const { Preferences } = require('./preferences.js');
 const { Controller } = require('./controller.js');
@@ -23,7 +25,18 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
 
 ipcRenderer.on('save-dialog-path-selected', (event, filePath)=> {
   const schedule = Schedule.fromHtml('#classes-table-body');
-  // TODO run assigner
-  // TODO save CSV
-  console.log(schedule)
+  const assignments = assign(schedule);
+  console.log(assignments);
+
+  writeFile(
+    filePath,
+    stringify(assignments),
+    {
+      encoding: "utf8"
+    },
+    err => {
+    if (err) {
+      console.log(err);
+    }
+  });
 });

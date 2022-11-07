@@ -1,5 +1,7 @@
-function assign(records) {
-  return records;
+function assign(schedule) {
+  return [
+    ['a', 'b', 'c']
+  ];
 }
 
 module.exports = {
