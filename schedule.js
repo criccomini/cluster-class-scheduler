@@ -17,7 +17,8 @@ class Schedule {
   static fromPreferences(preferences) {
     const classes = preferences
       .classes()
-      .map(c => new Class(c));
+      .map(c => new Class(c))
+      .reduce((map, c) => (map[c.name] = c, map), {});
 
     return new Schedule(classes);
   }
@@ -39,7 +40,7 @@ class Schedule {
         minStudents,
         maxStudents
       );
-    });
+    }).reduce((map, c) => (map[c.name] = c, map), {});
     return new Schedule(classes);
   }
 }

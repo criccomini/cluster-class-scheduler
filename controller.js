@@ -6,7 +6,7 @@ class Controller {
       .innerHTML = "";
 
     // Add classes to table
-    [...classes]
+    Object.values(classes)
       .sort((c1, c2) => c1.name.localeCompare(c2.name, undefined, { sensitivity: 'base' }))
       .forEach(c => Controller.addClass(c));
   }
