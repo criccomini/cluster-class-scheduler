@@ -2,8 +2,8 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
     // https://stackoverflow.com/a/55908510
     webPreferences: {
       enableRemoteModule: true,

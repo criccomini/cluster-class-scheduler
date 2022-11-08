@@ -1,6 +1,6 @@
-const { dialog, ipcRenderer } = require('electron');
+const { ipcRenderer } = require('electron');
 const { writeFile } = require('fs');
-const { assign } = require('./assigner.js');
+const { Assigner } = require('./assigner.js');
 const { stringify } = require('csv-stringify/sync');
 const { Schedule } = require('./schedule.js');
 const { Preferences } = require('./preferences.js');
@@ -25,7 +25,8 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
 
 ipcRenderer.on('save-dialog-path-selected', (event, filePath)=> {
   const schedule = Schedule.fromHtml('#classes-table-body');
-  const assignments = assign(schedule);
+  // TODO need to find preferences here...
+  const assignments = new Assigner(schedule, null).assign();
 
   writeFile(
     filePath,
