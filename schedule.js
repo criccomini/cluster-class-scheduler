@@ -14,6 +14,11 @@ class Schedule {
     this.classes = classes;
   }
 
+  numDays() {
+    // TODO hard coded right now
+    return 3;
+  }
+
   static fromPreferences(preferences) {
     // Put the choices into a set so we get unique class names.
     const classes = Array.from(new Set(

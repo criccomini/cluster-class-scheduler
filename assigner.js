@@ -1,10 +1,15 @@
 class Assigner {
   constructor(schedule, preferences) {
+    this.classes = Object.keys(schedule.classes);
+    this.students = Object.keys(preferences.preferences);
     this.schedule = schedule;
     this.preferences = preferences;
   }
 
   assign() {
+    const randomAssignments = this.#assignRandomly();
+    console.log(randomAssignments);
+
     return [
       {
         "Name": "Emily Kwok",
@@ -15,10 +20,46 @@ class Assigner {
     ];
   }
 
-  #assignRandomly(schedule, name) {
+  #assignRandomly() {
+    // Create a queue of students to work off of.
+    const studentQueue = [...this.students];
+    // student name: [<day 1 class>, <day 2 class>, ...]
+    const studentAssignments = this.students.reduce((map, name) => (map[name] = {}, map), {});
+    // class name: [<student 1 name>, <student 2 name>, ...]
+    const classAssignments = this.classes.reduce((map, name) => (map[name] = [], map), {});
+
+    // Keep trying to assign while there are still students in the queue.
+    while (studentQueue.length > 0) {
+      // Grab a student.
+      const studentName = studentQueue.shift();
+      const preference = this.preferences.preferences[studentName];
+
+      // Find a random class
+      const randomClassIdx = Math.floor(Math.random() * this.classes.length);
+      const className = this.classes[randomClassIdx];
+      const clazz = this.schedule.classes[className];
+
+      if (this.#isAssignmentAllowed(clazz, classAssignments, preference, studentAssignments)) {
+        // Assign the student to the class.
+        classAssignments[className].push(studentName);
+        // Assign the class to the student for each day that it's held.
+        clazz.days.forEach(d => {
+          studentAssignments[studentName][`day_${d}`] = clazz.name;
+        });
+      }
+
+      if (studentAssignments[studentName].length < schedule.numDays()) {
+        // If we haven't scheduled every day, put the student back into the
+        // end of the queue.
+        studentQueue.push(studentName);
+      }
+    }
+
+    return classAssignments;
   }
 
-  #isAssignmentAllowed(clazz, name) {
+  #isAssignmentAllowed(clazz, classAssignment, preference, studentAssignment) {
+    return true;
   }
 }
 
