@@ -15,11 +15,11 @@ class Schedule {
   }
 
   static fromPreferences(preferences) {
-    const classes = preferences
-      .classes()
-      .map(c => new Class(c))
-      .reduce((map, c) => (map[c.name] = c, map), {});
-
+    // Put the choices into a set so we get unique class names.
+    const classes = Array.from(new Set(
+      Object.values(preferences.preferences)
+        .flatMap(c => c.choices)
+    )).map(name => new Class(name));
     return new Schedule(classes);
   }
 
