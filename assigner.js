@@ -33,13 +33,15 @@ class Assigner {
       // Grab a student.
       const studentName = studentQueue.shift();
       const preference = this.preferences.preferences[studentName];
+      const studentAssignment = studentAssignments[studentName];
 
       // Find a random class
       const randomClassIdx = Math.floor(Math.random() * this.classes.length);
       const className = this.classes[randomClassIdx];
+      const classAssignment = classAssignments[className];
       const clazz = this.schedule.classes[className];
 
-      if (this.#isAssignmentAllowed(clazz, classAssignments, preference, studentAssignments)) {
+      if (this.#isAssignmentAllowed(clazz, classAssignment, preference, studentAssignment)) {
         // Assign the student to the class.
         classAssignments[className].push(studentName);
         // Assign the class to the student for each day that it's held.
@@ -59,7 +61,9 @@ class Assigner {
   }
 
   #isAssignmentAllowed(clazz, classAssignment, preference, studentAssignment) {
-    return true;
+    const classIsNotFull = classAssignment.length < clazz.maxStudents;
+    const studentIsNotFullyBooked = Object.keys(studentAssignment).length < this.schedule.numDays() - preference.absents.length;
+    return classIsNotFull && studentIsNotFullyBooked;
   }
 }
 
