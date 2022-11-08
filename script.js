@@ -18,19 +18,19 @@ ipcRenderer.on('open-dialog-paths-selected', (event, filePaths)=> {
   // Only support one file (no multi-select) right now
   Preferences.loadFromCsv(filePaths[0])
     .then(preferences => {
-      const schedule = Schedule.fromPreferences(preferences);
-      Controller.addClasses(schedule.classes);
+      global.preferences = preferences;
+      global.schedule = Schedule.fromPreferences(global.preferences);
+      Controller.addClasses(global.schedule.classes);
     });
 });
 
 ipcRenderer.on('save-dialog-path-selected', (event, filePath)=> {
-  const schedule = Schedule.fromHtml('#classes-table-body');
-  // TODO need to find preferences here...
-  const assignments = new Assigner(schedule, null).assign();
+  global.schedule = Schedule.fromHtml('#classes-table-body');
+  global.assignments = new Assigner(global.schedule, global.preferences).assign();
 
   writeFile(
     filePath,
-    stringify(assignments, { header: true, quoted: true }),
+    stringify(global.assignments, { header: true, quoted: true }),
     {
       encoding: "utf8"
     },
