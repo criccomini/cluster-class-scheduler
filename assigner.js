@@ -27,6 +27,8 @@ class Assigner {
     const studentAssignments = this.students.reduce((map, name) => (map[name] = {}, map), {});
     // {<class name>: [<student 1 name>, <student 2 name>, ...]}
     const classAssignments = this.classes.reduce((map, name) => (map[name] = [], map), {});
+    // Index to a location in this.classes. Round robin it as we assign students.
+    let roundRobinClassIdx = 0;
 
     // Keep trying to assign while there are still students in the queue.
     while (studentQueue.length > 0) {
@@ -36,8 +38,7 @@ class Assigner {
       const studentAssignment = studentAssignments[studentName];
 
       // Find a random class
-      const randomClassIdx = Math.floor(Math.random() * this.classes.length);
-      const className = this.classes[randomClassIdx];
+      const className = this.classes[roundRobinClassIdx];
       const classAssignment = classAssignments[className];
       const clazz = this.schedule.classes[className];
 
@@ -49,6 +50,8 @@ class Assigner {
         clazz.days.forEach(d => {
           studentAssignments[studentName][`day_${d}`] = clazz.name;
         });
+        // Move on to the next class if we've successfully assigned.
+        roundRobinClassIdx = (roundRobinClassIdx + 1) % this.classes.length;
         // END Critical section in a multi-threaded environment.
       }
 
