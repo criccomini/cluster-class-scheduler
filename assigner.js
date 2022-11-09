@@ -23,9 +23,9 @@ class Assigner {
   #assignRandomly() {
     // Create a queue of students to work off of.
     const studentQueue = [...this.students];
-    // student name: [<day 1 class>, <day 2 class>, ...]
+    // {<student name>: {'day_1': <class name>, 'day_2': <class name>, ...}}
     const studentAssignments = this.students.reduce((map, name) => (map[name] = {}, map), {});
-    // class name: [<student 1 name>, <student 2 name>, ...]
+    // {<class name>: [<student 1 name>, <student 2 name>, ...]}
     const classAssignments = this.classes.reduce((map, name) => (map[name] = [], map), {});
 
     // Keep trying to assign while there are still students in the queue.
@@ -42,12 +42,14 @@ class Assigner {
       const clazz = this.schedule.classes[className];
 
       if (this.#isAssignmentAllowed(clazz, classAssignment, preference, studentAssignment)) {
+        // BEGIN Critical section in a multi-threaded environment.
         // Assign the student to the class.
         classAssignments[className].push(studentName);
         // Assign the class to the student for each day that it's held.
         clazz.days.forEach(d => {
           studentAssignments[studentName][`day_${d}`] = clazz.name;
         });
+        // END Critical section in a multi-threaded environment.
       }
 
       if (studentAssignments[studentName].length < schedule.numDays()) {
