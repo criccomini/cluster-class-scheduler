@@ -30,7 +30,7 @@ class Assigner {
     const optimizedAssignments = JSON.parse(JSON.stringify(studentAssignments));
 
     // Do some swaps.
-    for (let i = 0; i < 100000; i++) {
+    for (let i = 0; i < 1000; ++i) {
       const studentAName = this.students[Math.floor(Math.random() * this.students.length)];
       const studentBName = this.students[Math.floor(Math.random() * this.students.length)];
 
@@ -76,8 +76,8 @@ class Assigner {
       log.debug(`"${studentBName}" swap is legal ${studentBSwapIsLegal}`);
 
       if (studentASwapIsLegal && studentBSwapIsLegal &&
-          swappedStudentAScore + swappedStudentBScore >
-          currentStudentAScore + currentStudentBScore) {
+          swappedStudentAScore > currentStudentAScore &&
+          swappedStudentBScore > currentStudentBScore) {
         log.debug(`Swapping ${studentAName} with ${studentBName}`);
 
         // Then let's swap!
@@ -99,7 +99,7 @@ class Assigner {
         const numChoices = preference.choices.length;
         const idx = preference.choices.indexOf(className);
         const choiceScore = ((numChoices - idx) / numChoices);
-        return idx > 0 ? score + choiceScore : score;
+        return idx >= 0 ? score + choiceScore : score;
       }, 0);
   }
 
@@ -119,8 +119,7 @@ class Assigner {
       const studentAssignment = studentAssignments[studentName];
 
       // Find a random class.
-      const randomClassIdx = Math.floor(Math.random() * this.classes.length);
-      const className = this.classes[randomClassIdx];
+      const className = this.#pickClass(preference);
       const classAssignment = classAssignments[className];
       const clazz = this.schedule.classes[className];
 
@@ -141,6 +140,20 @@ class Assigner {
     }
 
     return studentAssignments;
+  }
+
+  #pickClass(preference) {
+    // Pick a class, but heavily favor classes at the top of the choice list.
+    const numChoiceslusOne = preference.choices.length + 1;
+    const randomZeroToOne = Math.random();
+    for (let i = 0; i < numChoiceslusOne; ++i) {
+      // We don't get array out of bounds here because the extra choice
+      // will always result in 0 > [0-1].
+      if ((numChoiceslusOne - 1 - i) / numChoiceslusOne > randomZeroToOne) {
+        return preference.choices[i];
+      }
+    }
+    return this.classes[Math.floor(Math.random() * this.classes.length)];
   }
 
   #isAssignmentAllowed(clazz, classAssignment, preference, studentAssignment) {

@@ -31,7 +31,7 @@ class Schedule {
   static fromHtml(tableBodyId) {
     const classRows = document.querySelectorAll(tableBodyId + " tr");
     const classes = Array.from(classRows).map(r => {
-      const name = r.cells[0].innerHTML;
+      const name = this.#decodeHtml(r.cells[0].innerHTML);
       const minStudents = parseInt(r.cells[4].children[0].value);
       const maxStudents = parseInt(r.cells[5].children[0].value);
       const days = [
@@ -47,6 +47,12 @@ class Schedule {
       );
     }).reduce((map, c) => (map[c.name] = c, map), {});
     return new Schedule(classes);
+  }
+
+  static #decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
   }
 }
 
