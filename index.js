@@ -1,5 +1,8 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 
+// Import is required in order to enable it for renderer process.
+const log = require('electron-log');
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 1024,

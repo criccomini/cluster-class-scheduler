@@ -1,3 +1,5 @@
+const log = require('electron-log');
+
 class Assigner {
   constructor(schedule, preferences) {
     this.classes = Object.keys(schedule.classes);
@@ -10,7 +12,7 @@ class Assigner {
     const randomStudentAssignments = this.#assignRandomly();
     const optimizedStudentAssignments = this.#runStochasticOptimization(randomStudentAssignments);
 
-    console.log(optimizedStudentAssignments);
+    log.info(optimizedStudentAssignments);
 
     return [
       {
@@ -22,8 +24,8 @@ class Assigner {
     ];
   }
 
-    // {<student name>: {'day_1': <class name>, 'day_2': <class name>, ...}}
-    #runStochasticOptimization(studentAssignments) {
+  // {<student name>: {'day_1': <class name>, 'day_2': <class name>, ...}}
+  #runStochasticOptimization(studentAssignments) {
     // Hack to clone studentAssignments so we don't modify the original
     const optimizedAssignments = JSON.parse(JSON.stringify(studentAssignments));
 
@@ -32,33 +34,33 @@ class Assigner {
       const studentAName = this.students[Math.floor(Math.random() * this.students.length)];
       const studentBName = this.students[Math.floor(Math.random() * this.students.length)];
 
-      console.log(`proposing swap between "${studentAName}" and "${studentBName}"`);
+      log.debug(`proposing swap between "${studentAName}" and "${studentBName}"`);
 
       const studentAPreferences = this.preferences.preferences[studentAName];
       const studentBPreferences = this.preferences.preferences[studentBName];
 
-      console.log(`"${studentAName}" preferences ${JSON.stringify(studentAPreferences)}`);
-      console.log(`"${studentBName}" preferences ${JSON.stringify(studentBPreferences)}`);
+      log.debug(`"${studentAName}" preferences ${JSON.stringify(studentAPreferences)}`);
+      log.debug(`"${studentBName}" preferences ${JSON.stringify(studentBPreferences)}`);
 
       const studentAAssignments = studentAssignments[studentAName];
       const studentBAssignments = studentAssignments[studentBName];
 
-      console.log(`"${studentAName}" assignments ${JSON.stringify(studentAAssignments)}`);
-      console.log(`"${studentBName}" assignments ${JSON.stringify(studentBAssignments)}`);
+      log.debug(`"${studentAName}" assignments ${JSON.stringify(studentAAssignments)}`);
+      log.debug(`"${studentBName}" assignments ${JSON.stringify(studentBAssignments)}`);
 
       // Score current schedules for each student.
       const currentStudentAScore = this.#scoreSchedule(studentAPreferences, studentAAssignments);
       const currentStudentBScore = this.#scoreSchedule(studentBPreferences, studentBAssignments);
 
-      console.log(`"${studentAName}" current score ${currentStudentAScore}`);
-      console.log(`"${studentBName}" current score ${currentStudentBScore}`);
+      log.debug(`"${studentAName}" current score ${currentStudentAScore}`);
+      log.debug(`"${studentBName}" current score ${currentStudentBScore}`);
 
       // Get scores for each student after swapping schedules.
       const swappedStudentAScore = this.#scoreSchedule(studentAPreferences, studentBAssignments);
       const swappedStudentBScore = this.#scoreSchedule(studentBPreferences, studentAAssignments);
 
-      console.log(`"${studentAName}" swapped score ${swappedStudentAScore}`);
-      console.log(`"${studentBName}" swapped score ${swappedStudentBScore}`);
+      log.debug(`"${studentAName}" swapped score ${swappedStudentAScore}`);
+      log.debug(`"${studentBName}" swapped score ${swappedStudentBScore}`);
 
       // TODO verify we aren't swapping illegally
       const studentASwapIsLegal = studentAPreferences
@@ -70,20 +72,20 @@ class Assigner {
         .filter(d => `day_${d}` in studentAAssignments)
         .length == 0;
 
-      console.log(`"${studentAName}" swap is legal ${studentASwapIsLegal}`);
-      console.log(`"${studentBName}" swap is legal ${studentBSwapIsLegal}`);
+      log.debug(`"${studentAName}" swap is legal ${studentASwapIsLegal}`);
+      log.debug(`"${studentBName}" swap is legal ${studentBSwapIsLegal}`);
 
       if (studentASwapIsLegal && studentBSwapIsLegal &&
           swappedStudentAScore + swappedStudentBScore >
           currentStudentAScore + currentStudentBScore) {
-        console.log(`Swapping ${studentAName} with ${studentBName}`);
+        log.debug(`Swapping ${studentAName} with ${studentBName}`);
 
         // Then let's swap!
         const tmp = optimizedAssignments[studentAName]
         optimizedAssignments[studentAName] = optimizedAssignments[studentBName];
         optimizedAssignments[studentBName] = tmp;
       } else {
-        console.log(`Not swapping ${studentAName} with ${studentBName}`);
+        log.debug(`Not swapping ${studentAName} with ${studentBName}`);
       }
     }
 
