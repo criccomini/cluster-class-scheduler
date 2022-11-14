@@ -4,7 +4,8 @@
   "description": "A scheduler app for cluster classes",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder -mwl"
   },
   "repository": {
     "type": "git",
@@ -16,10 +17,13 @@
     "url": "https://github.com/criccomini/cluster-class-scheduler/issues"
   },
   "homepage": "https://github.com/criccomini/cluster-class-scheduler#readme",
-  "devDependencies": {
+  "dependencies": {
     "csv-parse": "^5.3.1",
     "csv-stringify": "^6.2.0",
-    "electron": "^21.2.1",
     "electron-log": "^4.4.8"
+  },
+  "devDependencies": {
+    "electron": "^21.2.1",
+    "electron-builder": "^23.6.0"
   }
 }
