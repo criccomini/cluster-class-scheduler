@@ -4,7 +4,7 @@ This repo contains a little app for doing cluster class scheduling.
 
 ## Usage
 
-Watch a video demo [here](https://youtu.be/r8avNMhHAAA) to see how to download and install Cluster Class Scheduler.
+Watch a video demo [here](https://youtu.be/r8avNMhHAAA) to see how to download, install, and use Cluster Class Scheduler.
 
 1. Download your cluster class schedule from Google Docs as a Comma Separated Values (.csv) file.  
 _(File > Download > Comma Separated Values (.csv))_
