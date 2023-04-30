@@ -32,7 +32,7 @@ app.whenReady().then(() => {
   });
 });
 
-ipcMain.on('show-open-dialog', (event, arg) => {
+ipcMain.on('show-open-preferences-dialog', (event, arg) => {
   dialog.showOpenDialog({
     filters: [
       { name: 'csv', extensions: ['csv'] }
@@ -40,21 +40,50 @@ ipcMain.on('show-open-dialog', (event, arg) => {
     properties: ['openFile']
   }).then(result => {
     if (!result.canceled) {
-      event.sender.send('open-dialog-paths-selected', result.filePaths);
+      event.sender.send('open-dialog-preferences-paths-selected', result.filePaths);
     }
   }).catch(err => {
     console.log(err);
   });
 });
 
-ipcMain.on('show-save-dialog', (event, arg) => {
+ipcMain.on('show-save-assignments-dialog', (event, arg) => {
   dialog.showSaveDialog({
     filters: [
       { name: 'csv', extensions: ['csv'] }
     ]
   }).then(result => {
     if (!result.canceled) {
-      event.sender.send('save-dialog-path-selected', result.filePath);
+      event.sender.send('save-dialog-assignments-path-selected', result.filePath);
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
+ipcMain.on('show-open-settings-dialog', (event, arg) => {
+  dialog.showOpenDialog({
+    filters: [
+      { name: 'csv', extensions: ['csv'] }
+    ],
+    properties: ['openFile']
+  }).then(result => {
+    if (!result.canceled) {
+      event.sender.send('open-dialog-settings-paths-selected', result.filePaths);
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
+ipcMain.on('show-save-settings-dialog', (event, arg) => {
+  dialog.showSaveDialog({
+    filters: [
+      { name: 'csv', extensions: ['csv'] }
+    ]
+  }).then(result => {
+    if (!result.canceled) {
+      event.sender.send('save-dialog-settings-path-selected', result.filePath);
     }
   }).catch(err => {
     console.log(err);
