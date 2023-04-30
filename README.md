@@ -9,8 +9,9 @@ Watch a video demo [here](https://youtu.be/r8avNMhHAAA) to see how to download, 
 1. Download your cluster class schedule from Google Docs as a Comma Separated Values (.csv) file.  
 _(File > Download > Comma Separated Values (.csv))_
 2. Download and install the latest `cluster-class-scheduler` release [here](https://github.com/criccomini/cluster-class-scheduler/releases).
-3. Open the app by right-clicking the app icon and selecting `Open`.  
-You will get a warning that the app is untrusted; click `Open` again.
+3. Open the app by control-clicking the app icon and control-clicking `Open`.  
+You will get a warning that the app is untrusted; `Open` again.  
+_NOTE: Holding the control button down through the whole process is important._
 4. Click `Open Google Doc CSV file` in the app. Select the `.csv` file you downloaded in (1).
 5. Configure the class days and mininum/maximum students.
 6. Click `Generate and Save Assignments` at the bottom of the app.
