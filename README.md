@@ -65,7 +65,7 @@ The assignment algorithm is very basic, and definitely will have issues in certa
 
 This works quite well since each student provides 12 choices and the preferences are quite diverse.
 
-_NOTE: I tested a stochastic approach using an optimization function based on student preference. This worked, but was much slower. In this approach, I randomly asigned students to clases, then proposed swapping students randomly; the swap was allowed if the optimization score improved._
+_NOTE: I tested a stochastic approach using an optimization function based on student preference. This worked, but was much slower. In this approach, I randomly assigned students to clases, then proposed swapping students randomly; the swap was allowed if the optimization score improved._
 
 ## Building
 
