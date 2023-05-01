@@ -16,11 +16,19 @@ _NOTE: Holding the control button down through the whole process is important._
 5. Configure the class days and mininum/maximum students.
 6. Click `Generate and Save Assignments` at the bottom of the app.
 
+It can be tedious to reconfigure the class settings every time you open the app and load the Google Doc CSV. To save the settings so you don't need to reconfigure each time:
+
+1. Follow steps 1-5, above.
+2. Click "Save Settings" and save the settings file.
+3. The next time you open the app, follow steps 1-4, above, then click "Open Settings CSV file".
+4. Select the settings file you previously saved.
+
 ## Configuration
 
 A class list is automatically generated from the contents of the `.csv` file. The user may adjust the default configurations after the file is loaded. There are three configuration options:
 
 * **Days**: Which days the class will be held. `Day 1` represents the first cluster class day (usually the first Friday), `Day 2` the second, and so on.
+* **Reruns**: Classes that rerun will have a different group of students for each day. Classes that don't re-run will keep the same group of students for all days that the class runs.
 * **Minimum Students**: The minimum number of students required for the class to be held.
 * **Maximum Students**: The maximum number of students allowed to enroll in a class.
 
