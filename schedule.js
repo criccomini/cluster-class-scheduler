@@ -3,9 +3,10 @@ const { parse } = require('csv-parse/sync');
 const { Preferences } = require("./preferences");
 
 class Class {
-  constructor(name, days=[1, 2, 3], minStudents=6, maxStudents=30) {
+  constructor(name, days=[1, 2, 3], reruns=true, minStudents=6, maxStudents=30) {
     this.name = name;
     this.days = days;
+    this.reruns = reruns;
     this.minStudents = minStudents;
     this.maxStudents = maxStudents;
   }
@@ -29,6 +30,7 @@ class Schedule {
         "Day 1": c.days.includes(1),
         "Day 2": c.days.includes(2),
         "Day 3": c.days.includes(3),
+        "Reruns": c.reruns,
         "Minimum Students": c.minStudents,
         "Maximum Students": c.maxStudents
       })
@@ -52,8 +54,9 @@ class Schedule {
     const classRows = document.querySelectorAll(tableBodyId + " tr");
     const classes = Array.from(classRows).map(r => {
       const name = this.#decodeHtml(r.cells[0].innerHTML);
-      const minStudents = parseInt(r.cells[4].children[0].value);
-      const maxStudents = parseInt(r.cells[5].children[0].value);
+      const reruns = r.cells[4].children[0].checked;
+      const minStudents = parseInt(r.cells[5].children[0].value);
+      const maxStudents = parseInt(r.cells[6].children[0].value);
       const days = [
         r.cells[1].children[0].checked ? 1 : 0,
         r.cells[2].children[0].checked ? 2 : 0,
@@ -62,6 +65,7 @@ class Schedule {
       return new Class(
         name,
         days,
+        reruns,
         minStudents,
         maxStudents
       );
@@ -85,6 +89,7 @@ class Schedule {
       return new Class(
         r['Class Name'],
         days,
+        r['Reruns'],
         parseInt(r['Minimum Students']),
         parseInt(r['Maximum Students'])
       );

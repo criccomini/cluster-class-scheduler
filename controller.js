@@ -20,6 +20,7 @@ class Controller {
           <td><input type="checkbox" name="${c.name}[day_1]" ${c.days.includes(1) ? 'checked' : ''} /></td>
           <td><input type="checkbox" name="${c.name}[day_2]" ${c.days.includes(2) ? 'checked' : ''} /></td>
           <td><input type="checkbox" name="${c.name}[day_3]" ${c.days.includes(3) ? 'checked' : ''} /></td>
+          <td><input type="checkbox" name="${c.name}[reruns]" ${c.reruns ? 'checked' : ''} /></td>
           <td><input type="text" name="${c.name}[min]" size="4" value="${c.minStudents}" /></td>
           <td><input type="text" name="${c.name}[max]" size="4" value="${c.maxStudents}" /></td>
         </tr>
