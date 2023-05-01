@@ -1,5 +1,6 @@
 const log = require('electron-log');
 
+// Rerun classes get a new set of students on each day.
 class RerunClassAssignment {
   constructor(clazz) {
     this.clazz = clazz;
@@ -76,6 +77,7 @@ class RerunClassAssignment {
   }
 }
 
+// Regular classes keep the same students for all days that the class runs.
 class RegularClassAssignment {
   constructor(clazz) {
     this.clazz = clazz;
@@ -217,6 +219,24 @@ class Assigner {
     });
   }
 
+  #assignRemaining(classAssignments, studentAssignments) {
+    log.debug('assigning remaining');
+    // Assign remaining students that aren't yet fully assigned.
+    Object.entries(this.preferences.preferences).forEach(([studentName, preference]) => {
+      const studentAssignment = studentAssignments[studentName];
+      for (let i = 0; i < this.classes.length && !this.#isFullyAssigned(studentAssignment); ++i) {
+        const className = this.classes[i];
+        const classAssignment = classAssignments[className];
+
+        log.debug(`looking at "${studentName} for "${className}"`)
+
+        if (classAssignment.isAssignmentAllowed(studentAssignment)) {
+          classAssignment.assignStudent(studentName, studentAssignment);
+        }
+      }
+    });
+  }
+
   #clearStudent(classAssignments, studentAssignment, studentName) {
     for (const className of Object.values(studentAssignment)) {
       classAssignments[className].unassignStudent(studentName, studentAssignment);
@@ -234,24 +254,6 @@ class Assigner {
       }
     }
     return true;
-  }
-
-  #assignRemaining(classAssignments, studentAssignments) {
-    log.debug('assigning remaining');
-    // Assign remaining students that aren't yet fully assigned.
-    Object.entries(this.preferences.preferences).forEach(([studentName, preference]) => {
-      const studentAssignment = studentAssignments[studentName];
-      for (let i = 0; i < this.classes.length && !this.#isFullyAssigned(studentAssignment); ++i) {
-        const className = this.classes[i];
-        const classAssignment = classAssignments[className];
-
-        log.debug(`looking at "${studentName} for "${className}"`)
-
-        if (classAssignment.isAssignmentAllowed(studentAssignment)) {
-          classAssignment.assignStudent(studentName, studentAssignment);
-        }
-      }
-    });
   }
 
   #classesByPopularity() {
